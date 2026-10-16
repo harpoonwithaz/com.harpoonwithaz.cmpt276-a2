@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show All Ratings</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+    <main class="container">
+        <!-- TODO: Add thymeleaf templates to display data from ratings model -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Clarity</th>
+                    <th scope="col">Niceness</th>
+                    <th scope="col">Knowledgeability</th>
+                    <th scope="col">Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="r : ${rt}">
+                    <th scope="row" th:text="${r?.id}">No ID available</th>
+                    <td th:text="${r?.name}">No name available</td>
+                    <td th:text="${r?.email}">No email available</td>
+                    <td th:text="${r?.roleType}"></td>
+                    <td th:text="${r?.clarity}"></td>
+                    <td th:text="${r?.niceness}"></td>
+                    <td th:text="${r?.knowledgeableScore}"></td>
+                    <td th:text="${r?.comment}"></td>
+
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</body>
+
+</html>
