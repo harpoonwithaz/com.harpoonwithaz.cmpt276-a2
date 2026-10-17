@@ -14,6 +14,8 @@ DB_USERNAME=<database username>
 DB_PASSWORD=<database password>
 ```
 
+You can view an example here in the [environment variables example file](.env.example)
+
 ### Inject environment variables
 
 Once you have created a file to store the environment variables, you must inject them into your shell/terminal environment that you
@@ -23,7 +25,11 @@ use to run the application. On linux this can be done by doing:
 set -a && source .env && set +a
 ```
 
-Then you can run the application using that terminal instance however you want.
+Then you can run the application using that terminal instance using the `mvnw` script.
+
+```bash
+./mvnw spring-boot:run
+```
 
 Or, use the provided script which injects the environment variables and runs the spring-boot project.
 
