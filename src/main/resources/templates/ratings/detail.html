@@ -26,14 +26,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="r : ${rt}">
+                <tr th:each="r : ${rating}">
                     <th scope="row" th:text="${r?.id}">No ID available</th>
                     <td th:text="${r?.name}">No name available</td>
                     <td th:text="${r?.email}">No email available</td>
                     <td th:text="${r?.roleType}"></td>
                     <td th:text="${r?.clarity}"></td>
                     <td th:text="${r?.niceness}"></td>
-                    <td th:text="${r?.knowledgeableScore}"></td>
+                    <td th:text="${r?.knowledgeability}"></td>
                     <td th:text="${r?.comment}"></td>
 
                 </tr>
