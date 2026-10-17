@@ -1,11 +1,17 @@
 package com.harpoonwithaz.cmpt276_a2.models;
 
 import java.time.Instant;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name="staff_ratings")
 public class StaffRating {
-    private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // create a serial datatype for the ID
+    private Long id;
     private String name;
     private String email;
+    // @Enumerated(EnumType.STRING) // store it as a string
     private RoleType roleType;
     private int clarity;
     private int niceness;
@@ -13,14 +19,12 @@ public class StaffRating {
     private String comment;
     private Instant timeCreated;
     private Instant timeUpdated;
-    // TODO: Created at and updated at
     
     // Constructors
     public StaffRating() {}
 
-    public StaffRating(long id, String name, String email, RoleType roleType, int clarity, int niceness,
+    public StaffRating(String name, String email, RoleType roleType, int clarity, int niceness,
             int knowledgeableScore, String comment, Instant timeCreated, Instant timeUpdated) {
-        this.id = id;
         this.name = name;
         this.email = email;
         this.roleType = roleType;
@@ -32,7 +36,7 @@ public class StaffRating {
         this.timeUpdated = timeUpdated;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

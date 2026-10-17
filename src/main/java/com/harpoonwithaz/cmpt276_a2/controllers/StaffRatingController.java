@@ -3,7 +3,9 @@ package com.harpoonwithaz.cmpt276_a2.controllers;
 import java.util.List;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,26 +13,68 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.harpoonwithaz.cmpt276_a2.models.StaffRating;
+import com.harpoonwithaz.cmpt276_a2.models.StaffRatingRepository;
+
+import jakarta.servlet.http.HttpServletResponse;
+
 import com.harpoonwithaz.cmpt276_a2.models.RoleType;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Controller 
 public class StaffRatingController {
+
+    @Autowired 
+    private StaffRatingRepository staffRatingRepo;
+
     // List all ratings
     @GetMapping("ratings")
     public String getAllRatings(Model model) {
         System.out.println("Ratings endpoint called.");
-        
-        // TODO: Get all ratings from database
-        List<StaffRating> staffRatings = new ArrayList<>();
-        staffRatings.add(new StaffRating(10, "Bobby Chan", "bobbychan@sfu.ca", RoleType.PROF, 
-        10, 10, 10, "goat", Instant.now(), Instant.now()));
-        staffRatings.add(new StaffRating(2, "TOBY D", "bobbychan@sfu.ca", RoleType.PROF, 
-        10, 10, 10, "goat", Instant.now(), Instant.now()));
+        List<StaffRating> staffRatings = staffRatingRepo.findAll();
 
         model.addAttribute("rt", staffRatings);
-        System.out.println(model.getAttribute("rt"));
         return "ratings/detail";
     }
+
+    // Create new rating
+    @PostMapping("ratings")
+    public String postMethodName(@RequestParam Map<String, String> rating, HttpServletResponse response, Model model) {
+        System.out.println("ADD rating");
+
+        String name = rating.get("name");
+        System.out.println(name);
+        String email = rating.get("email");
+        // String role = rating.get("role");
+        RoleType role = RoleType.PROF; // hard coded for now
+        int clarity = Integer.parseInt(rating.get("clarity"));
+        int niceness = Integer.parseInt(rating.get("niceness"));
+        int knowledgeability = Integer.parseInt(rating.get("knowledgeability"));
+        String comment = rating.get("comment");
+
+        StaffRating newRating = new StaffRating(
+            name,
+            email,
+            role,
+            clarity,
+            niceness,
+            knowledgeability,
+            comment,
+            Instant.now(),
+            Instant.now()
+        );
+
+        staffRatingRepo.save(newRating);
+        response.setStatus(201);
+
+        List<StaffRating> staffRatings = new ArrayList<>();
+        staffRatings.add(newRating);
+
+        model.addAttribute("rt", staffRatings);
+        return "ratings/detail";
+    }
+    
 
     @GetMapping("ratings/{id}")
     public String getRatingById(@PathVariable long id) {

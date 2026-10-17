@@ -1,8 +1,8 @@
 package com.harpoonwithaz.cmpt276_a2.models;
 
 public enum RoleType {
-    TA,
     PROF,
+    TA,
     STAFF,
     INSTRUCTOR,
     OTHER
