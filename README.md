@@ -24,3 +24,10 @@ set -a && source .env && set +a
 ```
 
 Then you can run the application using that terminal instance however you want.
+
+Or, use the provided script which injects the environment variables and runs the spring-boot project.
+
+```zsh
+chmod 750 run.sh
+./run.sh
+```

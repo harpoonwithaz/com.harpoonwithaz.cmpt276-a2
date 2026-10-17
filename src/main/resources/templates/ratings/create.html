@@ -1,11 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Staff Rating</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    Create a new staff rating.
+    <main class="container">
+        <h1>New Staff Rating</h1>
+        <form action="/ratings" method="post">
+            <div class="form-group">
+                <label for="name">Staff Member Name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="name">
+            </div>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
+            </div>
+            <div class="form-group">
+                <label for="role">Staff Member Role</label>
+                <select class="form-control" id="role" name="role">
+                    <option>Professor</option>
+                    <option>Teaching Assistant</option>
+                    <option>Staff</option>
+                    <option>Instructor</option>
+                    <option>Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="clarity">Clarity</label>
+                <input type="number" class="form-control" id="clarity" name="clarity" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="niceness">Niceness</label>
+                <input type="number" class="form-control" id="niceness" name="niceness" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="knowledgeability">Knowledgeability</label>
+                <input type="number" class="form-control" id="knowledgeability" name="knowledgeability" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="comment">Comment</label>
+                <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <input class="btn btn-primary" type="submit" value="Submit"></input>
+            </div>
+        </form>
+    </main>
+
 </body>
+
 </html>
