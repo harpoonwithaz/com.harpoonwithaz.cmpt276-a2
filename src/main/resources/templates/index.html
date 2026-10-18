@@ -4,8 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CS Staff Ratings</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-    Home page
+    <main class="container fluid">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Overall Rating</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="r : ${ratings}">
+                    <td th:text="${r.profile.displayTitle()}">Unknown name</td>
+                    <td th:text="${r.score}">Unknown score</td>
+                    <td>
+                        <a class="btn btn-primary" th:href="@{/ratings/{id}(id=${r.id})}">View</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
 </body>
 </html>
