@@ -1,11 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit rating</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
+
 <body>
-    Edit staff member rating
+    <main class="container">
+        <h1>New Staff Rating</h1>
+        <form th:action="@{/ratings/edit}" th:object="${rating}" method="post">
+            <!-- This hidden input ensures the original ID is sent back to the backend -->
+            <input type="hidden" th:field="*{id}" />
+
+            <div class="form-group">
+                <label for="name">Staff Name:</label><br />
+                <input type="text" class="form-control" id="name" th:field="*{name}" />
+                <span class="error-message" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address:</label><br />
+                <input type="text" class="form-control" id="email" th:field="*{email}" />
+                <span class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="roleType">Role:</label><br />
+                <select class="form-control" id="roleType" th:field="*{roleType}">
+                    <option th:each="role : ${T(com.harpoonwithaz.cmpt276_a2.models.RoleType).values()}"
+                        th:value="${role}" th:text="${role}">
+                    </option>
+                </select>
+                <span class="error-message" th:if="${#fields.hasErrors('roleType')}" th:errors="*{roleType}"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="clarity">Clarity Score (1 - 10):</label><br />
+                <input type="number" class="form-control" id="clarity" th:field="*{clarity}" />
+                <span class="error-message" th:if="${#fields.hasErrors('clarity')}" th:errors="*{clarity}"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="niceness">Niceness Score (1 - 10):</label><br />
+                <input type="number" class="form-control" id="niceness" th:field="*{niceness}" />
+                <span class="error-message" th:if="${#fields.hasErrors('niceness')}" th:errors="*{niceness}"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="knowledgeability">Knowledgeability Score (1 - 10):</label><br />
+                <input type="number" class="form-control" id="knowledgeability" th:field="*{knowledgeability}" />
+                <span class="error-message" th:if="${#fields.hasErrors('knowledgeability')}"
+                    th:errors="*{knowledgeability}"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="comment">Comment (optional):</label><br />
+                <textarea id="comment" class="form-control" th:field="*{comment}" rows="3" cols="40"></textarea>
+                <span class="error-message" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></span>
+            </div>
+
+            <button class="btn btn-primary" type="submit">Edit Rating</button>
+            <a class="btn btn-secondary" th:href="@{/ratings}">Cancel</a>
+        </form>
+    </main>
 </body>
+
 </html>

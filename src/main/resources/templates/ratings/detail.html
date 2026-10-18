@@ -11,11 +11,9 @@
 
 <body>
     <main class="container">
-        <!-- TODO: Add thymeleaf templates to display data from ratings model -->
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Role</th>
@@ -23,11 +21,11 @@
                     <th scope="col">Niceness</th>
                     <th scope="col">Knowledgeability</th>
                     <th scope="col">Comment</th>
+                    <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="r : ${rating}">
-                    <th scope="row" th:text="${r?.id}">No ID available</th>
                     <td th:text="${r?.name}">No name available</td>
                     <td th:text="${r?.email}">No email available</td>
                     <td th:text="${r?.roleType}"></td>
@@ -35,7 +33,9 @@
                     <td th:text="${r?.niceness}"></td>
                     <td th:text="${r?.knowledgeability}"></td>
                     <td th:text="${r?.comment}"></td>
-
+                    <td>
+                        <a class="btn btn-primary" th:href="@{/ratings/edit/{id}(id=${r.id})}">Edit</a>
+                    </td>
                 </tr>
             </tbody>
         </table>
