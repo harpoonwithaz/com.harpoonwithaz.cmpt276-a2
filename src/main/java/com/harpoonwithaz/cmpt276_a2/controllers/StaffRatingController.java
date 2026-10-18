@@ -32,7 +32,8 @@ public class StaffRatingController {
     @Autowired 
     private StaffRatingRepository staffRatingRepo;
 
-    // List all ratings
+    // Return detail view of list of ratings
+    // TODO: Make this endpoint go to the summary view
     @GetMapping("ratings")
     public String getAllRatings(Model model) {
         System.out.println("Ratings endpoint called.");
@@ -40,6 +41,34 @@ public class StaffRatingController {
 
         model.addAttribute("rating", staffRatings);
         return "ratings/detail";
+    }
+
+    // Return detail view of rating
+    @GetMapping("ratings/{id}")
+    public String getRatingById(@PathVariable("id") Long id, Model model, HttpServletResponse response) {
+        // Retrieve rating from database
+        Optional<StaffRating> rating = staffRatingRepo.findById(id);
+
+        // No entry found in database with id
+        if (rating.isEmpty()) {
+            response.setStatus(404);
+            return "error/404";
+        }
+
+        List<StaffRating> ratingList = new ArrayList<>();
+        ratingList.add(rating.get());
+
+        model.addAttribute("rating", ratingList);
+        return "ratings/detail";
+    }
+    
+    
+    // Show blank creation form
+    @GetMapping("ratings/new")
+    public String getShowCreateForm(Model model) {
+        // Provide an empty object for Thymeleaf's form bindings
+        model.addAttribute("rating", new StaffRating());
+        return "ratings/create";
     }
 
     // Create new rating
@@ -66,30 +95,11 @@ public class StaffRatingController {
 
         return "redirect:/ratings";
     }
-    
 
-    @GetMapping("ratings/{id}")
-    public String getRatingById(@PathVariable("id") Long id, Model model, HttpServletResponse response) {
-        // TODO: Get rating from database for staff with id
-        System.out.println("id passed in");
-        System.out.println(id);
-        Optional<StaffRating> rating = staffRatingRepo.findById(id);
-
-        if (rating.isEmpty()) {
-            response.setStatus(404);
-            return "error/404";
-        }
-
-        List<StaffRating> ratingList = new ArrayList<>();
-        ratingList.add(rating.get());
-
-        model.addAttribute("rating", ratingList);
-        return "ratings/detail";
-    }
-    
     // Show edit rating form
-    @GetMapping("ratings/edit/{id}")
+    @GetMapping("ratings/{id}/edit")
     public String getEditRatingById(@PathVariable("id") Long id, Model model, HttpServletResponse response) {
+        // Retrieve rating from database
         Optional<StaffRating> rating = staffRatingRepo.findById(id);
 
         // No entry found in database with id
@@ -103,30 +113,61 @@ public class StaffRatingController {
     }
 
     // Edit existing rating
-    @PostMapping("ratings/edit")
+    @PostMapping("ratings/{id}/edit")
     public String postEditRatingById(
+        @PathVariable("id") Long id,
         @Valid @ModelAttribute("rating") StaffRating rating,
         BindingResult bindingResult,
-        Model model)
+        Model model,
+        HttpServletResponse response)
     {
+        // Validate user input
         if (bindingResult.hasErrors()) {
             System.out.println("Error in postEditRatingById()");
             return "ratings/edit"; // go back to the edit page and thymeleaf will give feedback
         }
 
-        System.out.println("id of postEditRatingById:");
-        System.out.println(rating.getId());
-        rating.setUpdatedAt(Instant.now());
+        // Retrieve existing rating from database
+        Optional<StaffRating> er = staffRatingRepo.findById(id);
 
-        staffRatingRepo.save(rating);
+        // No entry found in database with id
+        if (er.isEmpty()) {
+            response.setStatus(404);
+            return "error/404";
+        }
+
+        StaffRating existingRating = er.get();
+
+        // Update existing rating
+        existingRating.setName(rating.getName());
+        existingRating.setEmail(rating.getEmail());
+        existingRating.setRoleType(rating.getRoleType());
+        existingRating.setClarity(rating.getClarity());
+        existingRating.setNiceness(rating.getNiceness());
+        existingRating.setKnowledgeability(rating.getKnowledgeability());
+        existingRating.setComment(rating.getComment());
+        existingRating.setUpdatedAt(Instant.now());
+
+        // Update database
+        staffRatingRepo.save(existingRating);
+
+        // Redirect to ratings view
         return "redirect:/ratings";
     }
-    
-    // Show blank creation form
-    @GetMapping("ratings/new")
-    public String getShowCreateForm(Model model) {
-        // Provide an empty object for Thymeleaf's form bindings
-        model.addAttribute("rating", new StaffRating());
-        return "ratings/create";
+
+    // Delete action
+    @PostMapping("ratings/{id}/delete")
+    public String postDeleteRatingById(@PathVariable("id") Long id, Model model, HttpServletResponse response) {
+        Optional<StaffRating> rating = staffRatingRepo.findById(id);
+
+        // No entry found in database with id
+        if (rating.isEmpty()) {
+            response.setStatus(404);
+            return "error/404";
+        }
+
+        staffRatingRepo.deleteById(id);
+        
+        return "redirect:/ratings";
     }
 }
