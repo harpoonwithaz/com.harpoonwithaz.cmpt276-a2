@@ -11,8 +11,8 @@
 
 <body>
     <main class="container">
-        <h1>New Staff Rating</h1>
-        <form th:action="@{/ratings/edit}" th:object="${rating}" method="post">
+        <h1>Edit Staff Rating</h1>
+        <form th:action="@{/ratings/{id}/edit(id=${rating.id})}" th:object="${rating}" method="post">
             <!-- This hidden input ensures the original ID is sent back to the backend -->
             <input type="hidden" th:field="*{id}" />
 

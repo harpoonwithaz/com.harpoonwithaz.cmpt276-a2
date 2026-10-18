@@ -34,7 +34,11 @@
                     <td th:text="${r?.knowledgeability}"></td>
                     <td th:text="${r?.comment}"></td>
                     <td>
-                        <a class="btn btn-primary" th:href="@{/ratings/edit/{id}(id=${r.id})}">Edit</a>
+                        <a class="btn btn-primary" th:href="@{/ratings/{id}/edit(id=${r.id})}">Edit</a>
+                        <form th:action="@{/ratings/{id}/delete(id=${r.id})}" method="post"
+                            onsubmit="return confirm('Are you sure you want to delete this rating?');">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
                     </td>
                 </tr>
             </tbody>
