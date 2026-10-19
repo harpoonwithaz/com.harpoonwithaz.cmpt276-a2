@@ -10,8 +10,18 @@
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/ratings">Home</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="#">New</a>
+            </li>
+        </ul>
+    </nav>
     <main class="container">
-        <h1>New Staff Rating</h1>
+        <h1>Create New Staff Rating</h1>
         <form th:action="@{/ratings}" th:object="${rating}" method="post">
             <div class="form-group">
                 <label for="name">Staff Name:</label><br />
@@ -28,8 +38,8 @@
             <div class="form-group">
                 <label for="roleType">Role:</label><br />
                 <select class="form-control" id="roleType" th:field="*{roleType}">
-                    <option th:each="role : ${T(com.harpoonwithaz.cmpt276_a2.models.RoleType).values()}" th:value="${role}"
-                        th:text="${role}">
+                    <option th:each="role : ${T(com.harpoonwithaz.cmpt276_a2.models.RoleType).values()}"
+                        th:value="${role}" th:text="${role}">
                     </option>
                 </select>
                 <span class="error-message" th:if="${#fields.hasErrors('roleType')}" th:errors="*{roleType}"></span>
