@@ -79,4 +79,25 @@ public class StaffRating {
 
     public Instant getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(Instant updatedAt) { this.updatedAt = updatedAt; }
+
+    // StaffMemberProfile helper methods
+    public StaffMemberProfile getProfile() {
+        if (this.roleType == null) {
+            return new DefaultProfile(this.name);
+        }
+
+        switch (this.roleType) {
+            case PROF:
+                return new ProfProfile(this.name);
+            case TA:
+                return new TaProfile(this.name);
+            default:
+                return new DefaultProfile(this.name);
+        }
+    }
+
+    public double getScore() {
+        // Return average
+        return (niceness + clarity + knowledgeability) / 3.0;
+    }
 }

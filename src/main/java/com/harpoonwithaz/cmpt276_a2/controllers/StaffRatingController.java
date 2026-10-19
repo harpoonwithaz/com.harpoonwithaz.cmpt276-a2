@@ -34,13 +34,13 @@ public class StaffRatingController {
 
     // Return detail view of list of ratings
     // TODO: Make this endpoint go to the summary view
-    @GetMapping("ratings")
+    @GetMapping({"", "/", "ratings"})
     public String getAllRatings(Model model) {
         System.out.println("Ratings endpoint called.");
         List<StaffRating> staffRatings = staffRatingRepo.findAll();
 
-        model.addAttribute("rating", staffRatings);
-        return "ratings/detail";
+        model.addAttribute("ratings", staffRatings);
+        return "index";
     }
 
     // Return detail view of rating
@@ -167,7 +167,7 @@ public class StaffRatingController {
         }
 
         staffRatingRepo.deleteById(id);
-        
+
         return "redirect:/ratings";
     }
 }
