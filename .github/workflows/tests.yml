@@ -23,6 +23,6 @@ jobs:
           java-version: '25'
           cache: maven
 
-            - name: Run tests
+      - name: Run tests
         run: ./mvnw --batch-mode test \
           -Dtest=StaffRatingControllerTest,StaffRatingRepositoryTest,StaffRatingValidationTest
