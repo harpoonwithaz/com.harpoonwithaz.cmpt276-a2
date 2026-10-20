@@ -24,5 +24,4 @@ jobs:
           cache: maven
 
       - name: Run tests
-        run: ./mvnw --batch-mode test \
-          -Dtest=StaffRatingControllerTest,StaffRatingRepositoryTest,StaffRatingValidationTest
+        run: ./mvnw --batch-mode test -Dtest=StaffRatingControllerTest,StaffRatingRepositoryTest,StaffRatingValidationTest
