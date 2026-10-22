@@ -62,3 +62,5 @@ For the *DB_URL*, at the beginning include `jdbc:postgresql://`, and after that 
 ## Known Issues & Future Work
 
 - In the edit form, if the name is left blank, it gives an error for "Name cannot be blank" and "Name must be between 2 and 100 characters", rather than just one error.
+- Email validates on the server side using the `@Email` annotation from `import jakarta.validation.constraints.*;` rather than implementing my own complex email verification.
+- The backend returns a model which contains a list of ratings rather than a single rating object.
